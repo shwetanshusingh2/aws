@@ -1,6 +1,11 @@
 import boto3
 import zipfile, os
 
+os.environ['AWS_SHARED_CREDENTIALS_FILE'] = "C:/Users/Hp/.aws/credentials"
+
+os.environ['AWS_PROFILE'] = "default"
+os.environ['AWS_DEFAULT_REGION'] = "ap-south-1"
+
 client = boto3.client('cloudformation')
 s3 = boto3.resource('s3')
 
