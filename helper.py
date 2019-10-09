@@ -1,7 +1,7 @@
 import boto3
 from botocore.client import ClientError
 import time
-from Week1 import utils as u
+import utils as u
 import os
 
 
