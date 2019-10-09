@@ -15,8 +15,14 @@ Installing :
 Deployment :
 
 step 1: go to new item , give name for the project and select create using pipeline in it
+
+
 step 2: in trigger select poll scm and give timer for one minute 
+
+
 step 3: in pipeline select pipeline script from scm 
                           select git
                           give the git repository name and then click save.
+                          
+                          
 step 4: select build now in the project or change the repoitory to see the jenkins working. 
