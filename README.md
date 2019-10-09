@@ -6,13 +6,17 @@ Getting Started : Install Python 3.7 into your system. Also download and install
 
 Installing :
 
-1)Pycharm : Download Pycharm and install it. 
+1)Pycharm : Download Pycharm and install it.
+
 2)Python : Download Python and install it. 
+
 3)AWS CloudFormation : In PyCharm , Install AWS CloudFormation package to use AWS CloudFormation in it. 
+
 4)AWS ToolKit : In PyCharm , Install AWS ToolKit package to use AWS ToolKit in it.
+
 5)Jenkins : install jenkins on the system and configure it for using github integration.
 
-Deployment :
+Deployment using jenkins:
 
 step 1: go to new item , give name for the project and select create using pipeline in it
 
