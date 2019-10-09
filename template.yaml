@@ -62,7 +62,7 @@ Resources:
     Properties:
       FunctionName: !Sub lambdafunction
       Code:
-          S3Bucket: 'data-suddu'
+          S3Bucket: 'data-shwet'
           S3Key: 'lambda_function.zip'
       Handler: lambda_function.handler
       Runtime: python3.7
