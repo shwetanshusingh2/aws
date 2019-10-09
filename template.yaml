@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "testing"
+Parameters:
+  SourceBucket:
+    Type: String
+  DestinationBucket:
+    Type: String
+Resources:
+  bucket1:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref SourceBucket
+      NotificationConfiguration:
+        LambdaConfigurations:
+            - Event: 's3:ObjectCreated:*'
+              Function: !GetAtt LambdaFunction.Arn
+  BucketPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref LambdaFunction
+      Principal: s3.amazonaws.com
+      SourceArn: !Sub arn:aws:s3:::${SourceBucket}
+  bucket2:
+    Type: AWS::S3::Bucket
+    Properties:
+          BucketName: !Ref DestinationBucket
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName:
+        Fn::Sub: lambdarole
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+        Version: 2012-10-17
+      Path: /
+      Policies:
+        - PolicyName: S3Policy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                - s3:GetObject
+                Resource: !Sub arn:aws:s3:::${SourceBucket}/*
+              - Effect: Allow
+                Action:
+                - s3:PutObject
+                Resource: !Sub arn:aws:s3:::${DestinationBucket}/*
+              - Effect: Allow
+                Action:
+                - s3:List*
+                Resource: !Sub arn:aws:s3:::${SourceBucket}
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub lambdafunction
+      Code:
+          S3Bucket: 'data-suddu'
+          S3Key: 'lambda_function.zip'
+      Handler: lambda_function.handler
+      Runtime: python3.7
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+            source: !Ref SourceBucket
+            des: !Ref DestinationBucket
